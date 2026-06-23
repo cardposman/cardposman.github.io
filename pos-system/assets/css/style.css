@@ -94,3 +94,35 @@ details p{margin-top:10px;font-size:15px}
   .hero-grid,.content-grid{grid-template-columns:1fr}.cards,.gallery{grid-template-columns:1fr}.link-grid{grid-template-columns:1fr 1fr}h1{font-size:clamp(32px,9vw,40px);line-height:1.15}.section{padding:36px 0}.fixed-inner{align-items:stretch;flex-direction:column}.fixed-title{display:none}.fixed-actions{display:grid;grid-template-columns:1fr 1fr}.fixed-actions button{width:100%}.hero-actions button,.cta-actions button{width:100%}
 }
 @media (max-width:520px){.wrap{width:min(100% - 24px,1120px)}h1{font-size:32px;line-height:1.16;letter-spacing:-.055em}.link-grid{grid-template-columns:1fr}.card,.panel,.hero-card{border-radius:18px;padding:18px}.section h2{font-size:26px}.gallery .long-img img{max-height:none;width:100%}}
+
+/* 실제 장비 사진 히어로 영역 */
+.device-hero-photos{
+  background:rgba(255,255,255,.9);
+  border:1px solid #e4eaf7;
+  border-radius:var(--radius);
+  padding:18px;
+  box-shadow:var(--shadow);
+  overflow:hidden;
+}
+.device-photo-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:12px;color:#14284e}
+.device-photo-heading strong{font-size:20px;line-height:1.35;letter-spacing:-.04em}
+.device-photo-kicker{display:inline-flex;align-items:center;white-space:nowrap;padding:6px 10px;border-radius:999px;background:#edf3ff;color:#294a86;font-size:12px;font-weight:900}
+.device-photo-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.device-photo-card{margin:0;border:1px solid var(--line);border-radius:18px;background:linear-gradient(145deg,#f8fbff,#ffffff);overflow:hidden;box-shadow:0 10px 24px rgba(16,34,70,.07)}
+.device-photo-card img{width:100%;height:270px;object-fit:contain;padding:10px;background:#f8fbff}
+.device-photo-card figcaption{padding:10px 12px;border-top:1px solid var(--line);font-size:13px;font-weight:900;color:#33415d;background:#fff;letter-spacing:-.025em}
+.device-photo-note{margin:12px 2px 0;color:#65728a;font-size:13px;line-height:1.6}
+@media (max-width:860px){
+  .device-hero-photos{padding:14px;border-radius:20px}
+  .device-photo-card img{height:230px;padding:8px}
+  .device-photo-heading{align-items:center}
+}
+@media (max-width:520px){
+  .device-photo-grid{gap:8px}
+  .device-photo-card{border-radius:15px}
+  .device-photo-card img{height:178px;padding:6px}
+  .device-photo-card figcaption{padding:8px 9px;font-size:12px}
+  .device-photo-heading{display:block}
+  .device-photo-heading strong{display:block;margin-top:8px;font-size:18px}
+  .device-photo-note{font-size:12px}
+}
