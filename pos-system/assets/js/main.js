@@ -1,5 +1,6 @@
 const PHONE_NUMBER = '88888888';
 const NAVER_FORM_URL = 'nnnnnnnn';
+const MOBILE_NAV_QUERY = '(max-width: 860px)';
 
 function callNow() {
   const cleanNumber = PHONE_NUMBER.replace(/[^0-9+]/g, '');
@@ -20,3 +21,57 @@ function openNaverForm() {
     newWindow.opener = null;
   }
 }
+
+function closeMobileMenus(exceptGroup) {
+  document.querySelectorAll('.nav-group.is-open').forEach((group) => {
+    if (group !== exceptGroup) {
+      group.classList.remove('is-open');
+      const parent = group.querySelector('.nav-parent');
+      if (parent) parent.setAttribute('aria-expanded', 'false');
+    }
+  });
+}
+
+function setupMobileDropdowns() {
+  const mediaQuery = window.matchMedia(MOBILE_NAV_QUERY);
+  const navParents = document.querySelectorAll('.nav-parent');
+
+  navParents.forEach((parent) => {
+    parent.setAttribute('aria-haspopup', 'true');
+    parent.setAttribute('aria-expanded', 'false');
+
+    parent.addEventListener('click', (event) => {
+      if (!mediaQuery.matches) return;
+      event.preventDefault();
+
+      const group = parent.closest('.nav-group');
+      if (!group) return;
+
+      const willOpen = !group.classList.contains('is-open');
+      closeMobileMenus(group);
+      group.classList.toggle('is-open', willOpen);
+      parent.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+    });
+  });
+
+  document.addEventListener('click', (event) => {
+    if (!mediaQuery.matches) return;
+    if (!event.target.closest('.nav-group')) {
+      closeMobileMenus();
+    }
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') {
+      closeMobileMenus();
+    }
+  });
+
+  mediaQuery.addEventListener('change', (event) => {
+    if (!event.matches) {
+      closeMobileMenus();
+    }
+  });
+}
+
+document.addEventListener('DOMContentLoaded', setupMobileDropdowns);
