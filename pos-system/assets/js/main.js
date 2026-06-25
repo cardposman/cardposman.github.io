@@ -75,3 +75,38 @@ function setupMobileDropdowns() {
 }
 
 document.addEventListener('DOMContentLoaded', setupMobileDropdowns);
+
+
+function normalizeRegionKeyword(value) {
+  return (value || '').toString().replace(/\s+/g, '').toLowerCase();
+}
+
+function setupRegionSearch() {
+  document.querySelectorAll('[data-region-search-scope]').forEach((scope) => {
+    const input = scope.querySelector('[data-region-search-input]');
+    const items = Array.from(scope.querySelectorAll('[data-region-search-item]'));
+    const count = scope.querySelector('[data-region-search-count]');
+    const empty = scope.querySelector('[data-region-search-empty]');
+    if (!input || !items.length) return;
+
+    const update = () => {
+      const keyword = normalizeRegionKeyword(input.value);
+      let visibleCount = 0;
+
+      items.forEach((item) => {
+        const targetText = normalizeRegionKeyword(item.getAttribute('data-region-search-text') || item.textContent);
+        const isVisible = !keyword || targetText.includes(keyword);
+        item.classList.toggle('is-hidden', !isVisible);
+        if (isVisible) visibleCount += 1;
+      });
+
+      if (count) count.textContent = String(visibleCount);
+      if (empty) empty.hidden = visibleCount !== 0;
+    };
+
+    input.addEventListener('input', update);
+    update();
+  });
+}
+
+document.addEventListener('DOMContentLoaded', setupRegionSearch);
